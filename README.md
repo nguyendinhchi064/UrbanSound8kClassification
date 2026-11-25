@@ -17,10 +17,11 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 python -m scripts.download_dataset
-export URBANSOUND8K_PATH="/path/to/downloaded/dataset"
 ```
 
-On Windows PowerShell, activate with `.venv\Scripts\Activate.ps1` and set the dataset path with `$env:URBANSOUND8K_PATH = "C:\path\to\dataset"`.
+On Windows PowerShell, activate with `.venv\Scripts\Activate.ps1`.
+
+The download script saves the dataset location to `.dataset_path` (ignored by Git), and the scripts find it automatically. If the dataset is already in the kagglehub cache, it is found without downloading again. To use a copy stored elsewhere, set `URBANSOUND8K_PATH` (bash: `export URBANSOUND8K_PATH=/path/to/dataset`, PowerShell: `$env:URBANSOUND8K_PATH = "C:\path\to\dataset"`).
 
 Both the Kaggle layout (CSV and fold directories at the root) and the original dataset layout (metadata/ and audio/) are supported.
 

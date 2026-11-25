@@ -1,12 +1,9 @@
-
-import os
-from pathlib import Path
-
 import pandas as pd
 import numpy as np
 
 from .audio_preprocessing import preprocess_audio, SAMPLE_RATE, DURATION, TARGET_LENGTH
 from .spectrograms import generate_log_mel as log_mel_db, N_MELS, N_FFT, HOP_LENGTH
+from .paths import get_dataset_path
 
 TRAIN_FOLDS = tuple(range(1, 9))
 VALIDATION_FOLDS = (9,)
@@ -25,27 +22,6 @@ CLASS_NAMES = [
     "siren",
     "street_music"
 ]
-
-
-def get_dataset_path(dataset_path=None):
-    """Find the UrbanSound8K dataset folder."""
-
-    path = dataset_path or os.environ.get("URBANSOUND8K_PATH")
-
-    if not path:
-        raise ValueError(
-            "Dataset path not configured. Set URBANSOUND8K_PATH "
-            "or provide dataset_path."
-        )
-
-    path = Path(path).expanduser().resolve()
-
-    if not ((path / "UrbanSound8K.csv").exists() or (path / "metadata/UrbanSound8K.csv").exists()):
-        raise FileNotFoundError(
-            f"UrbanSound8K.csv not found in: {path}"
-        )
-
-    return path
 
 
 def load_metadata(dataset_path=None):

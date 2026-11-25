@@ -3,12 +3,10 @@ from src.data_loader import get_dataset_path, load_metadata
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Dataset paths
-dataset_path = str(get_dataset_path())
-csv_path = get_dataset_path() / "UrbanSound8K.csv"
-
 # Read the metadata
-df = load_metadata()
+dataset_path = get_dataset_path()
+print("Dataset folder:", dataset_path)
+df = load_metadata(dataset_path)
 
 # Display basic information
 print("Dataset shape:", df.shape)
