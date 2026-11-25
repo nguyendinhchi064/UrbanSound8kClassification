@@ -1,10 +1,11 @@
+from src.data_loader import get_dataset_path, load_metadata
 
 import os
 import soundfile as sf
 import numpy as np
 import pandas as pd
 
-dataset_path = r"C:\Users\TopTech\.cache\kagglehub\datasets\chrisfilo\urbansound8k\versions\1"
+dataset_path = str(get_dataset_path())
 
 audio_properties = []
 
@@ -12,6 +13,8 @@ print("Analyzing all UrbanSound8K audio files...")
 
 for i in range(1, 11):
     folder = os.path.join(dataset_path, f"fold{i}")
+    if not os.path.isdir(folder):
+        folder = os.path.join(dataset_path, "audio", f"fold{i}")
 
     for filename in os.listdir(folder):
         if filename.lower().endswith(".wav"):
@@ -44,6 +47,6 @@ print(audio_df["duration"].describe())
 print("\nAmplitude statistics:")
 print(audio_df["amplitude"].describe())
 
-audio_df.to_csv("audio_properties.csv", index=False)
+audio_df.to_csv("metadata/audio_properties.csv", index=False)
 
 print("\nResults saved to audio_properties.csv")

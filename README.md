@@ -1,122 +1,68 @@
 # UrbanSound8K Environmental Sound Classification
 
-## Project Overview
-
-This project prepares the UrbanSound8K dataset for environmental sound classification using a Convolutional Neural Network (CNN).
-
-Member 1 is responsible for audio processing and dataset preparation.
+Environmental sound classification using spectrograms and convolutional neural networks.
 
 ## Dataset
 
-- Dataset: UrbanSound8K
-- Source: https://www.kaggle.com/datasets/chrisfilo/urbansound8k
-- Total recordings: 8,732
-- Number of sound classes: 10
+[UrbanSound8K](https://urbansounddataset.weebly.com/urbansound8k.html) contains 8,732 recordings from ten sound classes, organized into ten predefined folds.
 
-Download and extract the dataset. The dataset folder should contain:
-- UrbanSound8K.csv
-- fold1/ through fold10/
+![Class distribution](figures/class_distribution.png)
 
-The raw audio files are not included in this Git repository.
+## Setup
 
-## Technologies
+Use Python 3.12 and run commands from the repository root.
 
-- Python
-- NumPy
-- Pandas
-- Librosa
-- SoundFile
-- Matplotlib
-- Jupyter Notebook
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python -m scripts.download_dataset
+export URBANSOUND8K_PATH="/path/to/downloaded/dataset"
+```
 
-## Installation
+On Windows PowerShell, activate with `.venv\Scripts\Activate.ps1` and set the dataset path with `$env:URBANSOUND8K_PATH = "C:\path\to\dataset"`.
 
-Install the required libraries:
+Both the Kaggle layout (CSV and fold directories at the root) and the original dataset layout (metadata/ and audio/) are supported.
 
-\\\ash
-pip install numpy pandas librosa soundfile matplotlib jupyter
-\\\
+## Audio representation
 
-## Dataset Configuration
+Recordings are resampled to 22,050 Hz, converted to mono, padded or cropped to four seconds and peak-normalized. STFT uses 2,048 FFT points and a 512-sample hop. Log-Mel features use 128 bands and are scaled to [0, 1]. Silent recordings map to zero-valued features.
 
-Set the dataset location using the URBANSOUND8K_PATH environment variable.
+![Spectrogram comparison](figures/spectrogram_comparison.png)
 
-Example in Windows PowerShell:
+## Model inputs
 
-\\\powershell
-C:\Users\TopTech\.cache\kagglehub\datasets\chrisfilo\urbansound8k\versions\1 = "C:\path\to\UrbanSound8K"
-\\\
+```python
+from src.data_loader import load_split
 
-Replace the example path with the location where you extracted the dataset.
+X_train, y_train = load_split("train")
+X_val, y_val = load_split("validation")
+```
 
-## Member 1: Audio Processing and Dataset Preparation
+Each sample has shape (128, 173, 1), with integer labels 0–9. For channels-first models, transpose batches with X.transpose(0, 3, 1, 2). The iterator iter_samples also supports loading individual examples without retaining every spectrogram in memory.
 
-The implemented tasks include:
+Training uses folds 1–8, validation fold 9 and final testing fold 10. One source recording (fsID 180937) occurs in both training and validation folds. The split loader excludes its 79 training clips, retaining the original validation and test folds. The resulting partitions contain 7,000 training, 816 validation and 837 test clips; all 8,732 clips remain available for dataset analysis. Use load_split for model experiments, rather than the unfiltered fold loader. Use the same split for each model and reserve test results for final evaluation. This is a fixed holdout protocol, rather than ten-fold cross-validation.
 
-1. Dataset exploration and class distribution analysis.
-2. Audio properties analysis:
-   - Sampling rates
-   - Durations
-   - Number of channels
-   - Signal amplitudes
-3. Audio preprocessing:
-   - Resampling to 22,050 Hz
-   - Conversion to mono
-   - Padding or cropping to 4 seconds
-   - Amplitude normalization
-4. STFT spectrogram generation.
-5. Log-Mel spectrogram generation.
-6. Spectrogram visualization and comparison.
-7. Reusable data loading functions for CNN input.
+## Repository layout
 
-## Main Files
-
-| File | Description |
+| Directory | Contents |
 |---|---|
-| dataset_exploration.ipynb | Dataset exploration and visualizations |
-| explore_dataset.py | Dataset metadata and class analysis |
-| analyze_audio.py | Audio properties analysis |
-| audio_preprocessing.py | Audio preprocessing functions |
-| spectrograms.py | STFT and Log-Mel generation |
-| data_loader.py | Reusable data loader |
-| test_data_loader.py | Data loader tests |
-| audio_properties.csv | Audio analysis results |
+| notebooks/ | Dataset exploration |
+| src/ | Audio preprocessing, spectrograms and dataset loading |
+| scripts/ | Download, inspection and validation |
+| metadata/ | Metadata and audio properties |
+| figures/ | Dataset and spectrogram visualizations |
+| tests/ | Preprocessing and loader tests |
 
-## Run the Tests
+## Reproduce the analysis
 
-After configuring the dataset path, run:
+```bash
+python -m pytest -q
+python -m scripts.explore_dataset
+python -m scripts.analyze_audio
+python -m scripts.inspect_audio
+python -m scripts.validate_dataset
+jupyter nbconvert --to notebook --execute --inplace notebooks/dataset_exploration.ipynb
+```
 
-\\\ash
-python test_data_loader.py
-\\\
-
-To test the data loader with one sample:
-
-\\\ash
-python data_loader.py
-\\\
-
-## CNN Input Format
-
-The data loader produces normalized Log-Mel spectrograms with the following shape:
-
-\\\	ext
-(128, 173, 1)
-\\\
-
-For a batch of 873 recordings:
-
-\\\	ext
-Input shape:  (873, 128, 173, 1)
-Labels shape: (873,)
-\\\
-
-These features are prepared for the CNN training stage.
-
-## Visualizations
-
-Generated visual outputs include:
-
-- class_distribution.png
-- spectrogram_comparison.png
-- stft_spectrogram.png
+Raw audio is excluded from version control.

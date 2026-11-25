@@ -1,11 +1,15 @@
+import os
+from src.data_loader import get_dataset_path, load_metadata
 
 import soundfile as sf
 import numpy as np
 
 # Path to one audio file
-audio_path = r"C:\Users\TopTech\.cache\kagglehub\datasets\chrisfilo\urbansound8k\versions\1\fold1\101415-3-0-2.wav"
+audio_path = str(get_dataset_path() / "fold1" / "101415-3-0-2.wav")
 
 # Read audio information
+if not os.path.isfile(audio_path):
+    audio_path = str(get_dataset_path() / "audio/fold1/101415-3-0-2.wav")
 audio, sample_rate = sf.read(audio_path)
 
 # Calculate audio properties

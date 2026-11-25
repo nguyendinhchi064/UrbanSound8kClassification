@@ -4,7 +4,7 @@ import librosa.display
 import numpy as np
 import matplotlib.pyplot as plt
 
-from audio_preprocessing import preprocess_audio, SAMPLE_RATE
+from .audio_preprocessing import preprocess_audio, SAMPLE_RATE
 
 N_FFT = 2048
 HOP_LENGTH = 512
@@ -19,6 +19,8 @@ def generate_stft(audio):
         hop_length=HOP_LENGTH
     )
 
+    if not np.any(stft):
+        return np.full(stft.shape, -80, dtype=np.float32)
     stft_db = librosa.amplitude_to_db(
         np.abs(stft),
         ref=np.max
@@ -37,12 +39,14 @@ def generate_log_mel(audio):
         n_mels=N_MELS
     )
 
+    if not np.any(mel):
+        return np.full_like(mel, -80)
     mel_db = librosa.power_to_db(mel, ref=np.max)
 
     return mel_db
 
 
-def visualize_spectrograms(audio, save_path="spectrogram_comparison.png"):
+def visualize_spectrograms(audio, save_path="figures/spectrogram_comparison.png"):
     """Display and save STFT and Log-Mel spectrograms."""
 
     stft_db = generate_stft(audio)
@@ -77,13 +81,3 @@ def visualize_spectrograms(audio, save_path="spectrogram_comparison.png"):
     return stft_db, mel_db
 
 
-if __name__ == "__main__":
-    file_path = r"C:\Users\TopTech\.cache\kagglehub\datasets\chrisfilo\urbansound8k\versions\1\fold1\101415-3-0-2.wav"
-
-    audio = preprocess_audio(file_path)
-
-    stft_db, mel_db = visualize_spectrograms(audio)
-
-    print("STFT shape:", stft_db.shape)
-    print("Log-Mel shape:", mel_db.shape)
-    print("Both spectrograms generated successfully!")

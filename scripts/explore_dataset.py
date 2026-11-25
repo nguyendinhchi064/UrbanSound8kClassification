@@ -1,13 +1,14 @@
+from src.data_loader import get_dataset_path, load_metadata
 
 import pandas as pd
 import matplotlib.pyplot as plt
 
 # Dataset paths
-dataset_path = r"C:\Users\TopTech\.cache\kagglehub\datasets\chrisfilo\urbansound8k\versions\1"
-csv_path = dataset_path + r"\UrbanSound8K.csv"
+dataset_path = str(get_dataset_path())
+csv_path = get_dataset_path() / "UrbanSound8K.csv"
 
 # Read the metadata
-df = pd.read_csv(csv_path)
+df = load_metadata()
 
 # Display basic information
 print("Dataset shape:", df.shape)
@@ -29,5 +30,5 @@ plt.ylabel("Number of Recordings")
 plt.xticks(rotation=45)
 plt.tight_layout()
 
-plt.savefig("class_distribution.png")
+plt.savefig("figures/class_distribution.png")
 plt.show()

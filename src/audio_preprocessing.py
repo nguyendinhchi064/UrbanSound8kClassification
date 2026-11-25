@@ -34,16 +34,3 @@ def preprocess_audio(file_path):
     return audio
 
 
-# Test the function
-if __name__ == "__main__":
-
-    file_path = r"C:\Users\TopTech\.cache\kagglehub\datasets\chrisfilo\urbansound8k\versions\1\fold1\101415-3-0-2.wav"
-
-    processed_audio = preprocess_audio(file_path)
-
-    print("PREPROCESSING RESULTS")
-    print("---------------------")
-    print("Sampling rate:", SAMPLE_RATE)
-    print("Duration:", len(processed_audio) / SAMPLE_RATE, "seconds")
-    print("Number of samples:", len(processed_audio))
-    print("Maximum amplitude:", np.max(np.abs(processed_audio)))
