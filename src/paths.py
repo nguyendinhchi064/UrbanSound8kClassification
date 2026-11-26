@@ -5,6 +5,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DATASET_PATH_FILE = PROJECT_ROOT / ".dataset_path"
+FEATURES_DIR = PROJECT_ROOT / "data" / "features"
 KAGGLE_HANDLE = "chrisfilo/urbansound8k"
 
 

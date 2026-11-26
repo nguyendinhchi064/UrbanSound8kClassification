@@ -45,7 +45,12 @@ def generate_log_mel(audio):
 
 def split_metadata(split, dataset_path=None):
     """Use official folds, removing shared source IDs from earlier partitions."""
-    df = load_metadata(dataset_path)
+    return split_dataframe(load_metadata(dataset_path), split)
+
+def split_dataframe(df, split):
+    """Select train/validation/test rows of a metadata table (needs fold and fsID)."""
+    if split not in ("train", "validation", "test"):
+        raise ValueError("split must be 'train', 'validation' or 'test'.")
     train = df[df.fold.isin(TRAIN_FOLDS)]
     val = df[df.fold.isin(VALIDATION_FOLDS)]
     test = df[df.fold.isin(TEST_FOLDS)]
@@ -61,28 +66,28 @@ def load_split(split, dataset_path=None):
     return np.stack(X), np.asarray(y, dtype=np.int64)
 
 
-def load_sample(row, dataset_path=None):
-    """Load one audio file and its class label."""
-
+def audio_file(row, dataset_path=None):
+    """Path of a metadata row's WAV file, for the Kaggle or the original layout."""
     path = get_dataset_path(dataset_path)
-
     fold = int(row["fold"])
     filename = row["slice_file_name"]
 
     file_path = path / f"fold{fold}" / filename
-
     if not file_path.exists():
         file_path = path / "audio" / f"fold{fold}" / filename
     if not file_path.exists():
         raise FileNotFoundError(file_path)
+    return file_path
 
-    audio = preprocess_audio(str(file_path))
+def load_sample(row, dataset_path=None):
+    """Load one audio file and its class label."""
+
+    audio = preprocess_audio(str(audio_file(row, dataset_path)))
     spectrogram = generate_log_mel(audio)
 
     label = int(row["classID"])
 
     return spectrogram, label
-
 
 def iter_samples(folds, dataset_path=None):
     folds = tuple(folds)
