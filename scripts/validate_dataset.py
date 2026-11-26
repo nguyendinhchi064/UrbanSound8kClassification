@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 import numpy as np
 from src.data_loader import get_dataset_path, load_metadata, iter_samples, INPUT_SHAPE
+from src.paths import PROJECT_ROOT
 
 def main():
     root = get_dataset_path()
@@ -22,7 +23,7 @@ def main():
         results.append({"fold": fold, "recordings": count, "classes": sorted(labels)})
         print(f"Fold {fold}: {count} recordings validated", flush=True)
     assert sum(r["recordings"] for r in results) == 8732
-    Path("metadata/validation.json").write_text(json.dumps(results, indent=2) + "\n")
+    (PROJECT_ROOT / "metadata" / "validation.json").write_text(json.dumps(results, indent=2) + "\n")
 
 if __name__ == "__main__":
     main()

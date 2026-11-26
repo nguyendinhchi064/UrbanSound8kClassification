@@ -1,4 +1,5 @@
 from src.data_loader import get_dataset_path, load_metadata
+from src.paths import PROJECT_ROOT
 
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -28,5 +29,5 @@ plt.ylabel("Number of Recordings")
 plt.xticks(rotation=45)
 plt.tight_layout()
 
-plt.savefig("figures/class_distribution.png")
+plt.savefig(PROJECT_ROOT / "figures" / "class_distribution.png")
 plt.show()

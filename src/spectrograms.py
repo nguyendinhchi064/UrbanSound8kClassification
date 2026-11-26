@@ -1,3 +1,4 @@
+from pathlib import Path
 
 import librosa
 import librosa.display
@@ -5,6 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from .audio_preprocessing import preprocess_audio, SAMPLE_RATE
+from .paths import PROJECT_ROOT
 
 N_FFT = 2048
 HOP_LENGTH = 512
@@ -46,7 +48,7 @@ def generate_log_mel(audio):
     return mel_db
 
 
-def visualize_spectrograms(audio, save_path="figures/spectrogram_comparison.png"):
+def visualize_spectrograms(audio, save_path=PROJECT_ROOT / "figures" / "spectrogram_comparison.png"):
     """Display and save STFT and Log-Mel spectrograms."""
 
     stft_db = generate_stft(audio)
@@ -75,6 +77,7 @@ def visualize_spectrograms(audio, save_path="figures/spectrogram_comparison.png"
     axes[1].set_title("Log-Mel Spectrogram")
 
     plt.tight_layout()
+    Path(save_path).parent.mkdir(parents=True, exist_ok=True)
     plt.savefig(save_path)
     plt.show()
 

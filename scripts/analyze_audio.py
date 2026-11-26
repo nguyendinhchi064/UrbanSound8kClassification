@@ -1,4 +1,5 @@
 from src.data_loader import get_dataset_path, load_metadata
+from src.paths import PROJECT_ROOT
 
 import os
 import soundfile as sf
@@ -47,6 +48,6 @@ print(audio_df["duration"].describe())
 print("\nAmplitude statistics:")
 print(audio_df["amplitude"].describe())
 
-audio_df.to_csv("metadata/audio_properties.csv", index=False)
+audio_df.to_csv(PROJECT_ROOT / "metadata" / "audio_properties.csv", index=False)
 
 print("\nResults saved to audio_properties.csv")

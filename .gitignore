@@ -17,3 +17,4 @@ datasets/
 
 # Machine-specific dataset location written by scripts.download_dataset
 .dataset_path
+validation.json
