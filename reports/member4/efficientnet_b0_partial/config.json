@@ -1,0 +1,18 @@
+{
+  "arch": "efficientnet_b0",
+  "stage": "partial",
+  "epochs": 25,
+  "batch_size": 32,
+  "head_lr": 0.0003,
+  "backbone_lr": 0.0001,
+  "seed": 42,
+  "patience": 8,
+  "dropout": 0.3,
+  "specaugment": false,
+  "from_checkpoint": "checkpoints/transfer/efficientnet_b0_frozen/best.pth",
+  "name": "efficientnet_b0_partial",
+  "device": "mps",
+  "torch_version": "2.15.0",
+  "total_parameters": 4020358,
+  "trainable_parameters": 3168550
+}

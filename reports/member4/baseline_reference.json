@@ -1,0 +1,13 @@
+{
+  "checkpoint": "checkpoints/best_cnn.pth",
+  "source": "Member 3 saved model; read-only validation replay",
+  "accuracy": 86.88725490196079,
+  "macro_f1": 87.89054326049838,
+  "balanced_accuracy": 87.73815428884626,
+  "parameters": 1206826,
+  "estimated_macs": 1127065088,
+  "latency_ms": 1.3648033398203552,
+  "device": "mps",
+  "best_epoch": 36,
+  "training_seconds_reported": 1855.2
+}

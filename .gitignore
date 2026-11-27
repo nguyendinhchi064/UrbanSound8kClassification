@@ -18,3 +18,39 @@ datasets/
 # Machine-specific dataset location written by scripts.download_dataset
 .dataset_path
 validation.json
+
+# Member 4 generated checkpoints and logs
+checkpoints/transfer/
+reports/member4/*.log
+
+# Local audio transfer artifacts
+checkpoints/audio_transfer/
+reports/member4_audio/*.log
+
+# Local AST extension
+checkpoints/ast_transfer/
+reports/member4_audio/advanced/*_probabilities.npy
+reports/member4_ast/*_probabilities.npy
+
+# Member 4 independent reproduction and local submission package
+runs/member4/
+submission_local/
+
+# Generated draft reports superseded by reports/member4_report.md
+reports/member4/member4_report.md
+reports/member4/development_summary.md
+reports/member4_audio/report.md
+reports/member4_ast/report.md
+
+# Full plots remain reproducible and local; commit only report figures.
+figures/transfer/*.png
+!figures/transfer/submission_stage_comparison.png
+!figures/transfer/submission_efficiency.png
+!figures/transfer/resnet18_repeat_full_2024.png
+!figures/transfer/mobilenet_v2_opt_mixup.png
+!figures/transfer/comparison.png
+figures/audio_transfer/*.png
+!figures/audio_transfer/comparison.png
+!figures/audio_transfer/mn20_as_confirm_123_1_partial.png
+!figures/audio_transfer/ast_ensemble_comparison.png
+!figures/audio_transfer/ast_selected_confusion.png

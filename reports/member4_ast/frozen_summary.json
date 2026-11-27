@@ -1,0 +1,8 @@
+{
+  "name": "embedding_rbf_C1.0",
+  "representation": "embedding",
+  "accuracy": 89.70588235294117,
+  "macro_f1": 91.02636411468517,
+  "balanced_accuracy": 91.19676281172924,
+  "fit_seconds": 8.401623541954905
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Cnn14_mAP_0431.pth",
+    "size_bytes": 327428481,
+    "sha256": "0dc499e40e9761ef5ea061ffc77697697f277f6a960894903df3ada000e34b31"
+  },
+  {
+    "name": "mn10_as_mAP_471.pt",
+    "size_bytes": 19708753,
+    "sha256": "0bd7dc2443af498c289a2e739f02ebb515d6aa3fd3ab9db539c86123ae368a4e"
+  },
+  {
+    "name": "mn20_as_mAP_478.pt",
+    "size_bytes": 71938961,
+    "sha256": "1561abc3a70373eb4fcae78628d8bde4d64ee7c37f51ba0f4cb89059fcd2a777"
+  },
+  {
+    "name": "mn40_as_mAP_484.pt",
+    "size_bytes": 274206417,
+    "sha256": "09624dca1c53128255c65c5a52ff49ae91bb01fe17f0e13b3c3a0c9f24a8478b"
+  }
+]

@@ -1,0 +1,21 @@
+{
+  "arch": "resnet18",
+  "stage": "partial",
+  "epochs": 25,
+  "batch_size": 32,
+  "head_lr": 0.0003,
+  "backbone_lr": 0.0001,
+  "seed": 123,
+  "patience": 8,
+  "dropout": 0.3,
+  "specaugment": false,
+  "mixup": 0.0,
+  "smoothing": 0.0,
+  "weight_decay": 0.0001,
+  "from_checkpoint": "checkpoints/transfer/resnet18_repeat_frozen_123/best.pth",
+  "name": "resnet18_repeat_partial_123",
+  "device": "mps",
+  "torch_version": "2.15.0",
+  "total_parameters": 11181642,
+  "trainable_parameters": 8398858
+}

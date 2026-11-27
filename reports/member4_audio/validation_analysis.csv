@@ -1,0 +1,4 @@
+name,accuracy,macro_f1,members
+best_audio_seed42,89.70588235294117,90.85121671779962,mn20_as_opt_higher_lr
+audio_ensemble,89.95098039215686,90.93780631771354,mn20_as_opt_higher_lr;mn10_as_partial;mn40_as_frozen
+mixed_pretraining_ensemble,89.4607843137255,90.46969902382736,mn20_as_opt_higher_lr;mn10_as_partial;mn40_as_frozen;resnet18_opt_regularized
