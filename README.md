@@ -145,6 +145,7 @@ python -m scripts.validate_transfer_checkpoint --checkpoint checkpoints/best_tra
 
 | Directory | Contents |
 |---|---|
+| report/ | Result of the different models |
 | notebooks/ | Executed dataset, spectrogram and transfer-learning notebooks |
 | src/ | Shared preprocessing, feature cache, dataset loaders and model implementations |
 | scripts/ | Dataset preparation, training, analysis, inference and experiment reproduction |
