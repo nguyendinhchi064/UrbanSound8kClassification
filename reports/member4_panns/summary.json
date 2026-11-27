@@ -1,0 +1,9 @@
+{
+  "best_recipe": "rbf_C1.0",
+  "accuracy": 88.97058823529412,
+  "macro_f1": 90.13150258838557,
+  "backbone_parameters": 81837071,
+  "pretraining": "AudioSet",
+  "split": "validation",
+  "upstream": "d2f4b8c18eab44737fcc0de1248ae21eb43f6aa4"
+}

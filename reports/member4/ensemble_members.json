@@ -1,0 +1,5 @@
+[
+  "resnet18_opt_regularized",
+  "mobilenet_v2_opt_mixup",
+  "densenet121_partial"
+]

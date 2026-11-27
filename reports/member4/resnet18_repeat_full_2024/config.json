@@ -1,0 +1,21 @@
+{
+  "arch": "resnet18",
+  "stage": "full",
+  "epochs": 30,
+  "batch_size": 32,
+  "head_lr": 0.0003,
+  "backbone_lr": 0.0001,
+  "seed": 2024,
+  "patience": 8,
+  "dropout": 0.3,
+  "specaugment": true,
+  "mixup": 0.0,
+  "smoothing": 0.05,
+  "weight_decay": 0.0001,
+  "from_checkpoint": "checkpoints/transfer/resnet18_repeat_partial_2024/best.pth",
+  "name": "resnet18_repeat_full_2024",
+  "device": "mps",
+  "torch_version": "2.15.0",
+  "total_parameters": 11181642,
+  "trainable_parameters": 11181642
+}

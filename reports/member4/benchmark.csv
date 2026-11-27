@@ -1,0 +1,4 @@
+run,arch,device,batch1_latency_ms,total_parameters,checkpoint_mib,estimated_macs
+resnet18_opt_regularized,resnet18,mps,2.5235383212566376,11181642,42.724976539611816,834909696
+mobilenet_v2_opt_mixup,mobilenet_v2,mps,5.039027500897646,2236682,8.750855445861816,149506560
+densenet121_partial,densenet121,mps,12.73052749922499,6964106,27.105514526367188,1295247360

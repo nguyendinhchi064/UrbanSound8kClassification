@@ -1,6 +1,46 @@
 # UrbanSound8K Environmental Sound Classification
 
-Environmental sound classification using spectrograms and convolutional neural networks.
+Environmental sound classification of ten urban sound categories using log-Mel spectrograms, a custom convolutional neural network and pretrained models. The repository contains the dataset preparation pipeline, executed analysis notebooks, model implementations, recorded experiments and selected checkpoints.
+
+**Project highlights** · 8,732 audio clips · 10 classes · source-disjoint fixed holdout · PyTorch · CPU / CUDA / Apple MPS
+
+## Project workflow
+
+```mermaid
+flowchart LR
+    A[UrbanSound8K audio] --> B[Preprocessing and log-Mel features]
+    B --> C[Custom CNN]
+    B --> D[ImageNet CNN transfer learning]
+    A --> E[Optional AudioSet-pretrained models]
+    C --> F[Validation comparison]
+    D --> F
+    E --> F
+    F --> G[Selected checkpoints]
+```
+
+## Results at a glance
+
+| Track | Selected model | Validation accuracy |
+|---|---|---:|
+| Custom CNN | Tuned CNN | 86.89% |
+| ImageNet transfer | ResNet18 | 87.50% |
+| ImageNet efficiency alternative | MobileNetV2 | 86.40% |
+| Optional AudioSet transfer | EfficientAT MN20 | 90.20% |
+| Optional ensemble | EfficientAT + AST | 90.81% |
+
+All results are from validation fold 9. Fold 10 is reserved for final evaluation. AudioSet results use additional pretraining information and are reported separately.
+
+## Project deliverables
+
+| Stage | Notebook / report |
+|---|---|
+| Dataset and audio exploration | [Dataset notebook](notebooks/dataset_exploration.ipynb) |
+| Spectrogram analysis and custom CNN | [Spectrogram notebook](notebooks/spectrogram_analysis.ipynb) |
+| CNN training and hyperparameter optimization | [Member 3 report](reports/member3_report.md) |
+| Transfer learning | [Member 4 notebook](notebooks/member4_transfer_learning.ipynb) · [Report](reports/member4_report.md) |
+| Optional audio-pretrained extension | [Audio transfer notebook](notebooks/member4_audio_transfer_extension.ipynb) |
+| Reproduction and model handoff | [Member 4 guide](reports/member4/README.md) · [Repository map](docs/REPOSITORY_GUIDE.md) |
+
 
 ## Dataset
 
@@ -20,7 +60,7 @@ python -m scripts.download_dataset
 python -m scripts.prepare_features
 ```
 
-`prepare_features` computes the Log-Mel spectrogram of every clip once (about 0.7 GB in `data/features/`, ignored by Git), so analysis and training do not decode audio every epoch. `pip install` gives the CPU build of PyTorch; for an NVIDIA GPU, install PyTorch first with the command from [pytorch.org](https://pytorch.org/get-started/locally/).
+`prepare_features` computes the Log-Mel spectrogram of every clip once (about 0.7 GB in `data/features/`, ignored by Git), so analysis and training do not decode audio every epoch. `pip install` installs the available PyTorch build for your platform. For NVIDIA CUDA, follow the platform-specific instructions from [pytorch.org](https://pytorch.org/get-started/locally/).
 
 On Windows PowerShell, activate with `.venv\Scripts\Activate.ps1`.
 
@@ -77,17 +117,43 @@ The default model has 1,206,826 parameters (4.6 MB) and needs about 1.1 G multip
 python -m scripts.model_summary --real-batch   # prints the layer table and saves reports/custom_cnn_summary.txt
 ```
 
+## Transfer learning — Member 4
+
+The required ImageNet-pretrained CNN study uses the same fixed holdout and full 128 × 173 log-Mel representation as the custom CNN. ResNet18, MobileNetV2, EfficientNet-B0 and DenseNet121 were compared using frozen feature extraction and selective/full fine-tuning.
+
+| Model | Validation accuracy | Role |
+|---|---:|---|
+| Custom CNN (Member 3) | 86.89% | Reference |
+| ResNet18 | 87.50% | Best observed ImageNet transfer checkpoint |
+| MobileNetV2 | 86.40% | Lower-MAC, smaller-checkpoint alternative |
+| EfficientAT MN20 | 90.20% | Optional AudioSet-pretrained single CNN |
+| EfficientAT + AST | 90.81% | Optional exploratory ensemble |
+
+ImageNet ResNet18 averaged 86.68% over three seeds; its best run does not establish a robust improvement over the custom CNN. AudioSet results use extra pretraining and different preprocessing, so they are reported separately. Fold 10 remains reserved for the team's final evaluation.
+
+- [Member 4 report](reports/member4_report.md): methodology, comparisons, limitations and handoff.
+- [Executed ImageNet notebook](notebooks/member4_transfer_learning.ipynb) · [Executed optional extension notebook](notebooks/member4_audio_transfer_extension.ipynb).
+- [Reproduction and checkpoint guide](reports/member4/README.md): setup, exact replay and validation.
+- [ImageNet experiments](reports/member4/model_comparison.csv) · [Audio CNN experiments](reports/member4_audio/model_comparison.csv).
+
+```bash
+uv pip install -r requirements-transfer.txt
+python -m scripts.validate_transfer_checkpoint --checkpoint checkpoints/best_transfer_resnet18.pth
+```
+
 ## Repository layout
 
 | Directory | Contents |
 |---|---|
-| notebooks/ | Dataset exploration and spectrogram analysis |
-| src/ | Audio preprocessing, spectrograms, dataset loading, feature cache and CNN model |
-| scripts/ | Download, inspection, validation, feature preparation and model summary |
-| reports/ | Model summary |
+| notebooks/ | Executed dataset, spectrogram and transfer-learning notebooks |
+| src/ | Shared preprocessing, feature cache, dataset loaders and model implementations |
+| scripts/ | Dataset preparation, training, analysis, inference and experiment reproduction |
+| reports/ | Member reports, metrics, experiment configurations and histories |
 | metadata/ | Metadata and audio properties |
-| figures/ | Dataset and spectrogram visualizations |
-| tests/ | Preprocessing, loader, feature cache, analysis and model tests |
+| figures/ | Data visualizations, training curves and model comparisons |
+| checkpoints/ | Selected custom and transfer CNN model weights |
+| tests/ | Dataset, feature and model tests |
+| docs/ | Repository navigation and handoff |
 
 ## Reproduce the analysis
 

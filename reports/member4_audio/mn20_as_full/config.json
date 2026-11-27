@@ -1,0 +1,21 @@
+{
+  "arch": "mn20_as",
+  "stage": "full",
+  "epochs": 25,
+  "batch_size": 32,
+  "head_lr": 0.0002,
+  "backbone_lr": 3e-05,
+  "seed": 42,
+  "patience": 8,
+  "dropout": 0.25,
+  "specaugment": true,
+  "mixup": 0.0,
+  "smoothing": 0.05,
+  "weight_decay": 0.0001,
+  "from_checkpoint": "checkpoints/audio_transfer/mn20_as_partial/best.pth",
+  "name": "mn20_as_full",
+  "device": "mps",
+  "torch_version": "2.15.0",
+  "total_parameters": 16585250,
+  "trainable_parameters": 16585250
+}

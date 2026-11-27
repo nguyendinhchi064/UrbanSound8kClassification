@@ -1,0 +1,14 @@
+[
+  {
+    "source": "checkpoints/transfer/resnet18_repeat_full_2024/best.pth",
+    "destination": "checkpoints/best_transfer_resnet18.pth",
+    "bytes": 44800385,
+    "sha256": "d9b6a55dbeb84cfc92718f9cd510090b0098b18a1922c9787823322ce50e2bb8"
+  },
+  {
+    "source": "checkpoints/transfer/mobilenet_v2_opt_mixup/best.pth",
+    "destination": "checkpoints/best_transfer_mobilenet_v2.pth",
+    "bytes": 9175937,
+    "sha256": "1a2ebf40e1283a028dceffc44ff4da2e0e0fe9e66eb3cd63dc18cbe19ec5874b"
+  }
+]

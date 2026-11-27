@@ -1,0 +1,21 @@
+{
+  "arch": "resnet18",
+  "stage": "full",
+  "epochs": 30,
+  "batch_size": 32,
+  "head_lr": 0.0005,
+  "backbone_lr": 0.0002,
+  "seed": 42,
+  "patience": 8,
+  "dropout": 0.3,
+  "specaugment": false,
+  "mixup": 0.0,
+  "smoothing": 0.0,
+  "weight_decay": 0.0001,
+  "from_checkpoint": "checkpoints/transfer/resnet18_partial/best.pth",
+  "name": "resnet18_opt_higher_lr",
+  "device": "mps",
+  "torch_version": "2.15.0",
+  "total_parameters": 11181642,
+  "trainable_parameters": 11181642
+}
