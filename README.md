@@ -169,5 +169,3 @@ python -m scripts.prepare_features
 python -m scripts.model_summary --real-batch
 jupyter nbconvert --to notebook --execute --inplace notebooks/spectrogram_analysis.ipynb
 ```
-
-Raw audio is excluded from version control.
